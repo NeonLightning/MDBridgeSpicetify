@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MacroDeck.Plugin.Serilog" Version="3.0.0-preview.*" />
+    <PackageReference Include="Fleck" Version="1.2.0" />
+    <PackageReference Include="MacroDeck.Sdk" Version="3.0.0-preview.*" />
+    <PackageReference Include="MacroDeck.Plugin.Hosting" Version="3.0.0-preview.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

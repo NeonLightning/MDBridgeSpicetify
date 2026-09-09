@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Macro Deck - Real Host": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "MACRODECK_PLUGIN_LOAD_MODE": "RealHost"
+      }
+    }
+  }
+}

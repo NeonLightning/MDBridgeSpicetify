@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.macro-deck.app/plugin-manifest-v1.schema.json",
+  "manifestVersion": 1,
+  "id": "com.niyah.spicetify-bridge",
+  "name": "Spicetify Bridge",
+  "version": "1.0.0",
+  "icon": "icon.svg",
+  "description": "Plugin to support spicetify spotify extension",
+  "entrypoints": {
+    "win-x64":     { "executable": "runtimes/win-x64/Niyah.SpicetifyBridge.exe" },
+    "osx-arm64":   { "executable": "runtimes/osx-arm64/Niyah.SpicetifyBridge" },
+    "osx-x64":     { "executable": "runtimes/osx-x64/Niyah.SpicetifyBridge" },
+    "linux-x64":   { "executable": "runtimes/linux-x64/Niyah.SpicetifyBridge" },
+    "linux-arm64": { "executable": "runtimes/linux-arm64/Niyah.SpicetifyBridge" }
+  },
+  "publisher": {
+    "name": "NiyahVE"
+  },
+  "repository": "https://github.com/NiyahVE/MDBridgeSpicetify",
+  "license": "MIT",
+  "compatibility": {
+    "macroDeck": ">=3.0.0"
+  },
+  "permissions": [
+    "host:variable-values"
+  ]
+}
