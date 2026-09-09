@@ -19,7 +19,7 @@
   "repository": "https://github.com/NiyahVE/MDBridgeSpicetify",
   "license": "MIT",
   "compatibility": {
-    "macroDeck": ">=3.0.0"
+    "macroDeck": ">=2.99.9"
   },
   "permissions": [
     "host:variable-values"

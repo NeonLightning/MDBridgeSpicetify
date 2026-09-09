@@ -41,3 +41,4 @@ publish/
 .env
 .env.*
 MD3/com.niyah.spicetify-bridge-1.0.0.macroDeckPlugin
+/MD3/artifacts
