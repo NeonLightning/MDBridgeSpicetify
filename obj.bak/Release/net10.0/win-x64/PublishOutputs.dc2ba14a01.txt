@@ -1,0 +1,16 @@
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Niyah.SpicetifyBridge.exe
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Niyah.SpicetifyBridge.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Niyah.SpicetifyBridge.deps.json
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Niyah.SpicetifyBridge.runtimeconfig.json
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Niyah.SpicetifyBridge.pdb
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Fleck.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Localization.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Plugin.Hosting.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Plugin.Protocol.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Plugin.Serilog.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Sdk.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Ui.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\MacroDeck.Ui.Model.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Serilog.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Serilog.Extensions.Hosting.dll
+D:\programming\git\MDBridgeSpicetify\MD3\bin\publish\win-x64\Serilog.Extensions.Logging.dll

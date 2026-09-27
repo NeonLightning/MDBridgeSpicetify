@@ -2,26 +2,29 @@
   "$schema": "https://schemas.macro-deck.app/plugin-manifest-v1.schema.json",
   "manifestVersion": 1,
   "id": "com.niyah.spicetify-bridge",
-  "name": "Spicetify Bridge",
-  "version": "1.0.0",
+  "name": "Spicetify Bridge(MD3)",
+  "version": "1.0.1",
   "icon": "icon.svg",
-  "description": "Plugin to support spicetify spotify extension",
+  "description": "Plugin to support spicetify spotify extension updated for MD3 by NeonLightning",
   "entrypoints": {
     "win-x64":     { "executable": "runtimes/win-x64/Niyah.SpicetifyBridge.exe" },
     "osx-arm64":   { "executable": "runtimes/osx-arm64/Niyah.SpicetifyBridge" },
-    "osx-x64":     { "executable": "runtimes/osx-x64/Niyah.SpicetifyBridge" },
-    "linux-x64":   { "executable": "runtimes/linux-x64/Niyah.SpicetifyBridge" },
-    "linux-arm64": { "executable": "runtimes/linux-arm64/Niyah.SpicetifyBridge" }
+    "linux-x64":   { "executable": "runtimes/linux-x64/Niyah.SpicetifyBridge" }
   },
   "publisher": {
-    "name": "NiyahVE"
+    "name": "NiyahVE, NeonLightning"
   },
-  "repository": "https://github.com/NiyahVE/MDBridgeSpicetify",
   "license": "MIT",
-  "compatibility": {
-    "macroDeck": ">=2.99.9"
-  },
+  "compatibility": { "macroDeck": ">=3.0.0-0" },
   "permissions": [
     "host:variable-values"
-  ]
+  ],
+  "repository": "https://github.com/NeonLightning/MDBridgeSpicetify",
+  "homepage": "https://github.com/NiyahVE/MDBridgeSpicetify",
+  "ai": {
+  "interaction": false,
+  "generatedContent": false,
+  "generatedAssets": true,
+  "services": ["Gemini"]
+  }
 }
