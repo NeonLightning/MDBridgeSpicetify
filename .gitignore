@@ -42,3 +42,4 @@ publish/
 .env.*
 MD3/com.neonlightning.spicetify-bridge-1.0.0.macroDeckPlugin
 /MD3/artifacts
+packaged/md3spicebridge.zip
