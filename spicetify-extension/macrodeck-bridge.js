@@ -1,19 +1,12 @@
 /*
   Spicetify Extension: Macro Deck Bridge
-
-  - Connects to the local WebSocket server started by the Macro Deck plugin.
-  - Receives JSON commands and calls Spicetify.Player.*
-
-  The WebSocket endpoint is fixed at ws://127.0.0.1:8974/ws/
+  (with set-volume & seek support)
 */
 
 (function macroDeckBridge() {
   const WS_URL = "ws://127.0.0.1:8974/ws/";
 
-  /** @type {WebSocket | null} */
   let ws = null;
-
-  /** @type {number | null} */
   let stateInterval = null;
   let playerEventsAttached = false;
 
@@ -26,6 +19,7 @@
     const artists = Array.isArray(item?.artists)
       ? item.artists.map((a) => a?.name).filter(Boolean).join(", ")
       : "";
+    const album = item?.album?.name || "";
 
     return {
       type: "playerState",
@@ -41,6 +35,7 @@
       trackName: item?.name || "",
       trackArtists: artists,
       trackUri: item?.uri || "",
+      albumName: album,
     };
   }
 
@@ -57,12 +52,9 @@
 
   function sendPayload(payload) {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
-
     try {
       ws.send(JSON.stringify(payload));
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) { /* ignore */ }
   }
 
   function sendFullState(reason) {
@@ -79,11 +71,9 @@
 
     let lastProgressUpdate = 0;
 
-    // Event listeners: https://spicetify.app/docs/development/api-wrapper/methods/player#eventlisteners
     Spicetify.Player.addEventListener("songchange", () => sendFullState("songchange"));
     Spicetify.Player.addEventListener("onplaypause", () => sendFullState("playpause"));
 
-    // onprogress can fire very frequently; throttle to ~1 update/sec.
     Spicetify.Player.addEventListener("onprogress", () => {
       const now = Date.now();
       if (now - lastProgressUpdate < 1000) return;
@@ -117,7 +107,6 @@
       case "toggleShuffle":
         Spicetify.Player.toggleShuffle();
         sendFullState("command");
-        // UI/apply can be async; send a follow-up snapshot shortly after.
         setTimeout(() => sendFullState("command_confirm"), 300);
         break;
       case "toggleRepeat":
@@ -142,8 +131,24 @@
       case "playUri":
         if (typeof msg.uri === "string" && msg.uri.length > 0) {
           Spicetify.Player.playUri(msg.uri);
-          // songchange will fire; still send a quick update
           sendFullState("command");
+        }
+        break;
+      // ======== NEW COMMANDS ========
+      case "set-volume":
+        {
+          const vol = typeof msg.volume === "number" ? Math.max(0, Math.min(1, msg.volume / 100)) : 0;
+          Spicetify.Player.setVolume(vol);
+          sendFullState("command");
+          setTimeout(() => sendFullState("command_confirm"), 300);
+        }
+        break;
+      case "seek":
+        {
+          const pos = typeof msg.position === "number" ? msg.position * 1000 : 0;
+          Spicetify.Player.seek(pos);
+          sendFullState("command");
+          setTimeout(() => sendFullState("command_confirm"), 300);
         }
         break;
       default:
@@ -163,12 +168,9 @@
 
     ws.onopen = () => {
       console.log("[MacroDeckBridge] Connected", WS_URL);
-
       attachPlayerEventsOnce();
       sendFullState("connected");
 
-      // Poll so Macro Deck stays updated if you change volume/shuffle/etc. inside Spotify.
-      // With caching on the plugin side, 2s is usually fine and makes shuffle feel responsive.
       if (stateInterval == null) {
         stateInterval = setInterval(() => sendFullState("poll"), 2000);
       }
@@ -186,23 +188,18 @@
     ws.onclose = () => {
       console.log("[MacroDeckBridge] Disconnected, retrying...");
       ws = null;
-
       if (stateInterval != null) {
         clearInterval(stateInterval);
         stateInterval = null;
       }
-
       setTimeout(connect, 2000);
     };
 
-    ws.onerror = () => {
-      // onclose will follow
-    };
+    ws.onerror = () => { /* onclose will follow */ };
   }
 
   function waitForSpicetify() {
-    if (!window.Spicetify?.Player) return false;
-    return true;
+    return !!window.Spicetify?.Player;
   }
 
   const timer = setInterval(() => {

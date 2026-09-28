@@ -10,9 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="Fleck" Version="1.2.0" />
-	<PackageReference Include="MacroDeck.Plugin.Hosting" Version="3.0.0-beta.3" />
-	<PackageReference Include="MacroDeck.Plugin.Serilog" Version="3.0.0-beta.3" />
-	<PackageReference Include="MacroDeck.Sdk" Version="3.0.0-beta.3" />
+  <PackageReference Include="MacroDeck.Plugin.Analyzers" Version="3.0.0-beta.14" PrivateAssets="all" />
+  <PackageReference Include="MacroDeck.Plugin.Hosting" Version="3.0.0-beta.14" />
+  <PackageReference Include="MacroDeck.Plugin.Serilog" Version="3.0.0-beta.14" />
+  <PackageReference Include="MacroDeck.Sdk" Version="3.0.0-beta.14" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />

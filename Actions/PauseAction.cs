@@ -1,14 +1,53 @@
-using SuchByte.MacroDeck.ActionButton;
+﻿using MacroDeck.Sdk;
+using MacroDeck.Sdk.Actions;
+using MacroDeck.Localization;
+using Niyah.SpicetifyBridge.Services;
+using Serilog;
 
 namespace Niyah.SpicetifyBridge.Actions;
 
-public sealed class PauseAction : SpiceActionBase
+public sealed class PauseAction : IActionDefinition
 {
-    public override string Name => "Spotify: Pause";
-    public override string Description => "Pause playback";
+    private readonly ILogger _logger;
+    private readonly IWebSocketService _wsService;
 
-    public override void Trigger(string clientId, ActionButton actionButton)
+    public PauseAction(ILogger logger, IWebSocketService wsService)
     {
-        _ = Task.Run(() => Main.SendCommandAsync(new { type = "pause" }));
+        _logger = logger.ForContext<PauseAction>();
+        _wsService = wsService;
+    }
+
+    public string Id => "spicetify-pause";
+    public LocalizedText Name => "Pause";   // implicit conversion from string
+    public LocalizedText Description => "Pause playback";
+    public IReadOnlyList<ActionParameter> Parameters => Array.Empty<ActionParameter>();
+    public MacroDeckPlatform Platforms => MacroDeckPlatform.All;
+
+    public IActionExecutor CreateExecutor() => new Executor(_logger, _wsService);
+
+    private sealed class Executor : IActionExecutor
+    {
+        private readonly ILogger _logger;
+        private readonly IWebSocketService _wsService;
+
+        public Executor(ILogger logger, IWebSocketService wsService)
+        {
+            _logger = logger;
+            _wsService = wsService;
+        }
+
+        public async Task<ActionResult> ExecuteAsync(ActionExecutionContext context)
+        {
+            try
+            {
+                await _wsService.BroadcastAsync(new { type = "pause" });
+                return ActionResult.Success();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to send pause command");
+                return ActionResult.Failed("ExecutionFailed", $"Failed to send pause command");
+            }
+        }
     }
 }

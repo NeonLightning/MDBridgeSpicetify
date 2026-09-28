@@ -1,150 +1,87 @@
 # Spicetify Bridge
 
-`Spicetify Bridge` is a Macro Deck 2 plugin that controls Spotify through Spicetify's `Spicetify.Player` API.
-
-This project was also made heavily with the help of AI.
-
-Pull requests are welcome.
+Spicetify Bridge is an out-of-process **Macro Deck 3** plugin, currently version `1.0.2`, that controls Spotify through the Spicetify `Spicetify.Player` API. It uses the Macro Deck 3 SDK beta.14 packages.
 
 ## How it works
 
-1. The Macro Deck plugin starts a local WebSocket server on `127.0.0.1:8974`.
-2. The Spicetify extension in `spicetify-extension/macrodeck-bridge.js` connects to that server.
-3. Macro Deck actions send commands to the extension.
-4. The extension calls `Spicetify.Player.*` and sends player state updates back to Macro Deck.
+The Macro Deck plugin exposes actions and variables, and runs a local WebSocket server. The Spicetify extension, `spicetify-extension/macrodeck-bridge.js`, connects to the server, executes player commands, and sends Spotify state updates back to Macro Deck.
 
 ## Requirements
 
-- Macro Deck 2
+- Macro Deck 3
 - Spotify desktop app
 - Spicetify installed and working
+- For building from source: .NET 10 SDK and the `macrodeck-plugin` CLI
 
-## Install from the release zip
+## Install
 
-1. Download the latest release zip from the GitHub releases page.
-2. Extract the zip somewhere on your PC.
-3. Inside the extracted zip, you will find:
-   - a `Niyah.SpicetifyBridge` folder containing the Macro Deck plugin files
-   - `macrodeck-bridge.js` for Spicetify
-4. Copy the entire `Niyah.SpicetifyBridge` folder into your Macro Deck plugins folder.
-5. Start or restart Macro Deck.
-6. Enable the `Spicetify Bridge` plugin inside Macro Deck.
+1. Download and extract the latest release assets.
+2. Install `com.niyah.spicetify-bridge-<version>.macroDeckPlugin` through Macro Deck 3's plugin manager.
+3. Copy `spicetify-extension/macrodeck-bridge.js` into the Extensions folder used by your Spicetify installation. The JS file is a separate release asset; it is not inside the Macro Deck plugin artifact.
+4. Add `macrodeck-bridge.js` to Spicetify's configured extensions, preserving any extensions already listed:
 
-## Enable the Spicetify extension
+   ```sh
+   spicetify config extensions "existing-extension.js|macrodeck-bridge.js"
+   ```
 
-Follow these steps exactly.
+   Replace `existing-extension.js` with your current extension list. If you have no other extensions, use `macrodeck-bridge.js` as the value.
 
-### 1. Locate your Spicetify extensions folder
+5. Apply the Spicetify configuration and restart Spotify:
 
-Open a terminal and run:
+   ```sh
+   spicetify apply
+   ```
 
-```powershell
-spicetify -c
+6. Start Macro Deck 3 and Spotify. The extension should connect to `ws://127.0.0.1:8974/ws/`.
+
+To locate your Spicetify configuration directory, run `spicetify -c`, then find the active profile's Extensions folder.
+
+## Actions
+
+The plugin provides these Macro Deck actions:
+
+- Play, Pause, Toggle Play
+- Next Track, Previous Track
+- Toggle Shuffle, Toggle Repeat, Toggle Mute
+- Volume Up, Volume Down, Set Volume
+- Play Spotify URI
+- Seek
+
+Volume Up and Volume Down accept a step size from `0.0` to `1.0`. Set Volume accepts `0` to `100`. Seek uses seconds. Play Spotify URI accepts a Spotify URI, for example `spotify:track:4uLU6hMCjMI75M1A2tKUQC`.
+
+## Variables
+
+The plugin exposes these Macro Deck variables:
+
+- `playback-status` (text)
+- `track-name` (text)
+- `artist-name` (text)
+- `album-name` (text)
+- `current-position` (seconds)
+- `track-duration` (seconds)
+- `progress-percent` (percent)
+- `shuffle` (boolean)
+- `repeat` (text: `off`, `context`, or `track`)
+- `volume` (numeric)
+- `muted` (boolean)
+
+Spotify sends progress updates while playing; the plugin reads the latest received state for these variables.
+
+## Build from source
+
+From the repository root, build and validate the Macro Deck plugin artifact:
+
+```sh
+macrodeck-plugin build --output ./artifacts
+macrodeck-plugin validate --artifact ./artifacts/com.niyah.spicetify-bridge-1.0.2.macroDeckPlugin
 ```
 
-This shows your Spicetify configuration path. From there, locate the `Extensions` folder used by Spicetify.
+The build packages the platform payloads declared by `manifest.json`. The Spicetify extension is intentionally distributed separately; copy it from `spicetify-extension/macrodeck-bridge.js` when preparing a release.
 
-### 2. Copy the extension file
+## Development notes
 
-From the extracted release zip, copy:
+- The extension connects to the fixed URL `ws://127.0.0.1:8974/ws/`. Keep port `8974` available; although the plugin server tries later ports if it is occupied, the extension does not currently discover that fallback port.
+- The WebSocket server listens on loopback and does not use token authentication.
+- Macro Deck SDK, Hosting, and Serilog packages are pinned to `3.0.0-beta.14`; the matching analyzer is build-only.
 
-- `macrodeck-bridge.js`
-
-into your Spicetify `Extensions` folder.
-
-This file is included in the release zip next to the `Niyah.SpicetifyBridge` plugin folder.
-
-The filename should stay:
-
-- `macrodeck-bridge.js`
-
-### 3. Register the extension with Spicetify
-
-Run:
-
-```powershell
-spicetify config extensions macrodeck-bridge.js
-```
-
-If you already use other extensions, make sure this command does not unintentionally remove them from your existing Spicetify config. Add `macrodeck-bridge.js` alongside your other extension entries as needed.
-
-### 4. Apply the Spicetify changes
-
-Run:
-
-```powershell
-spicetify apply
-```
-
-### 5. Restart Spotify
-
-Close Spotify completely, then open it again.
-
-### 6. Verify the extension connects
-
-Once Spotify and Macro Deck are both running and the plugin is enabled, `spicetify-extension/macrodeck-bridge.js` should connect automatically to:
-
-- `ws://127.0.0.1:8974/ws/`
-
-No token or port setup is required.
-
-## Usage
-
-After installation:
-
-1. Add the plugin actions in Macro Deck.
-2. Press a button such as play, pause, next, previous, mute, volume up/down, or play URI.
-3. Macro Deck variables should update from Spotify state changes.
-
-## Macro Deck variables
-
-The plugin creates and updates these variables in `Main.cs`.
-
-### Directly synced from Spotify state
-
-These are updated from player-state messages sent by `spicetify-extension/macrodeck-bridge.js`:
-
-- `spice_volume_percent`
-- `spice_volume`
-- `spice_muted`
-- `spice_shuffle`
-- `spice_repeat`
-- `spice_repeat_mode`
-- `spice_is_playing`
-- `spice_playback_state`
-- `spice_duration_ms`
-- `spice_duration_mmss`
-- `spice_track_name`
-- `spice_track_artists`
-- `spice_track_uri`
-- `spice_track`
-
-### Synced from Spotify, then locally smoothed
-
-These are based on Spotify progress updates, but `Main.cs` also interpolates them locally once per second so Macro Deck stays responsive even if Spotify throttles timers:
-
-- `spice_progress_percent`
-- `spice_progress_ms`
-- `spice_progress_mmss`
-
-### Sync behavior notes
-
-- Full state updates refresh most variables when Spotify reports events like connect, song change, play/pause, polling, or command results.
-- Progress-only updates mainly refresh the progress variables and playback state.
-- `spice_track` is a derived display string built in `Main.cs` from track name and artists.
-- `spice_repeat_mode` is a derived string in `Main.cs` based on the numeric `spice_repeat` value.
-
-## Build from source instead
-
-If you do not want to use the release zip:
-
-1. Build the plugin yourself.
-2. Copy the built plugin DLL and `ExtensionManifest.json` into your Macro Deck plugins folder.
-3. Copy `spicetify-extension/macrodeck-bridge.js` into your Spicetify `Extensions` folder.
-
-## Notes for development
-
-- `Main.cs` hard-codes the WebSocket port to `8974`.
-- `Bridge/SpiceWebSocketServer.cs` accepts local WebSocket connections without token authentication.
-- `spicetify-extension/macrodeck-bridge.js` connects to the fixed local WebSocket URL.
-- If your local Macro Deck SDK path differs, update `Directory.Build.props`.
+Pull requests are welcome.

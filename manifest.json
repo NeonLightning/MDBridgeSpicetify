@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "id": "com.niyah.spicetify-bridge",
   "name": "Spicetify Bridge(MD3)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icon": "icon.svg",
   "description": "Plugin to support spicetify spotify extension updated for MD3 by NeonLightning",
   "entrypoints": {
