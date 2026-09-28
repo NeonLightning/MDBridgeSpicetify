@@ -1,4 +1,4 @@
-namespace Niyah.SpicetifyBridge.Models;
+namespace NeonLightning.SpicetifyBridge.Models;
 
 public class PlayerStateUpdate
 {

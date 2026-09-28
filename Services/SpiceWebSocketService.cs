@@ -1,12 +1,12 @@
-﻿using Niyah.SpicetifyBridge.Bridge;
-using Niyah.SpicetifyBridge.Models;
+﻿using NeonLightning.SpicetifyBridge.Bridge;
+using NeonLightning.SpicetifyBridge.Models;
 using Serilog;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Timers;
 using MacroDeck.Sdk.Variables;
 
-namespace Niyah.SpicetifyBridge.Services;
+namespace NeonLightning.SpicetifyBridge.Services;
 
 public sealed class SpiceWebSocketService : IWebSocketService, IDisposable
 {

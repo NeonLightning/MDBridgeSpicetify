@@ -1,7 +1,7 @@
-using Niyah.SpicetifyBridge.Models;
+using NeonLightning.SpicetifyBridge.Models;
 using MacroDeck.Sdk.Variables;
 
-namespace Niyah.SpicetifyBridge.Services;
+namespace NeonLightning.SpicetifyBridge.Services;
 
 public interface IWebSocketService
 {

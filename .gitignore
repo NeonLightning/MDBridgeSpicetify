@@ -40,5 +40,5 @@ publish/
 # Optional: local env/config files if you create any later
 .env
 .env.*
-MD3/com.niyah.spicetify-bridge-1.0.0.macroDeckPlugin
+MD3/com.neonlightning.spicetify-bridge-1.0.0.macroDeckPlugin
 /MD3/artifacts

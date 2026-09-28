@@ -1,11 +1,11 @@
 using MacroDeck.Sdk;
 using MacroDeck.Sdk.Actions;
 using MacroDeck.Localization;
-using Niyah.SpicetifyBridge.Services;
+using NeonLightning.SpicetifyBridge.Services;
 using Serilog;
 using System.Globalization;
 
-namespace Niyah.SpicetifyBridge.Actions;
+namespace NeonLightning.SpicetifyBridge.Actions;
 
 public sealed class SetVolumeAction : IActionDefinition
 {

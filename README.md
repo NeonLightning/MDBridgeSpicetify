@@ -1,4 +1,6 @@
-# Spicetify Bridge
+# NeonLightning Spicetify Bridge
+
+This Macro Deck 3 bridge is maintained by NeonLightning and is based on the original Spicetify Bridge created by NiyahVE. The original project and its foundational implementation are credited to NiyahVE: https://github.com/NiyahVE/MDBridgeSpicetify. This project continues that work with updates for Macro Deck 3; thanks to NiyahVE for creating and sharing the original bridge.
 
 Spicetify Bridge is an out-of-process **Macro Deck 3** plugin, currently version `1.0.2`, that controls Spotify through the Spicetify `Spicetify.Player` API. It uses the Macro Deck 3 SDK beta.14 packages.
 
@@ -16,7 +18,7 @@ The Macro Deck plugin exposes actions and variables, and runs a local WebSocket 
 ## Install
 
 1. Download and extract the latest release assets.
-2. Install `com.niyah.spicetify-bridge-<version>.macroDeckPlugin` through Macro Deck 3's plugin manager.
+2. Install `com.neonlightning.spicetify-bridge-<version>.macroDeckPlugin` through Macro Deck 3's plugin manager.
 3. Copy `spicetify-extension/macrodeck-bridge.js` into the Extensions folder used by your Spicetify installation. The JS file is a separate release asset; it is not inside the Macro Deck plugin artifact.
 4. Add `macrodeck-bridge.js` to Spicetify's configured extensions, preserving any extensions already listed:
 
@@ -73,7 +75,7 @@ From the repository root, build and validate the Macro Deck plugin artifact:
 
 ```sh
 macrodeck-plugin build --output ./artifacts
-macrodeck-plugin validate --artifact ./artifacts/com.niyah.spicetify-bridge-1.0.2.macroDeckPlugin
+macrodeck-plugin validate --artifact ./artifacts/com.neonlightning.spicetify-bridge-1.0.2.macroDeckPlugin
 ```
 
 The build packages the platform payloads declared by `manifest.json`. The Spicetify extension is intentionally distributed separately; copy it from `spicetify-extension/macrodeck-bridge.js` when preparing a release.

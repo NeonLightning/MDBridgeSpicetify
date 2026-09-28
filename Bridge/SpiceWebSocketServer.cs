@@ -1,7 +1,7 @@
 using Fleck;
 using Serilog;
 
-namespace Niyah.SpicetifyBridge.Bridge;
+namespace NeonLightning.SpicetifyBridge.Bridge;
 
 public class SpiceWebSocketServer : IDisposable
 {

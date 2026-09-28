@@ -1,18 +1,18 @@
 {
   "$schema": "https://schemas.macro-deck.app/plugin-manifest-v1.schema.json",
   "manifestVersion": 1,
-  "id": "com.niyah.spicetify-bridge",
+  "id": "com.neonlightning.spicetify-bridge",
   "name": "Spicetify Bridge(MD3)",
   "version": "1.0.2",
   "icon": "icon.svg",
-  "description": "Plugin to support spicetify spotify extension updated for MD3 by NeonLightning",
+  "description": "NeonLightning's Macro Deck 3 Spicetify bridge, based on the original work by NiyahVE.",
   "entrypoints": {
-    "win-x64":     { "executable": "runtimes/win-x64/Niyah.SpicetifyBridge.exe" },
-    "osx-arm64":   { "executable": "runtimes/osx-arm64/Niyah.SpicetifyBridge" },
-    "linux-x64":   { "executable": "runtimes/linux-x64/Niyah.SpicetifyBridge" }
+    "win-x64":     { "executable": "runtimes/win-x64/NeonLightning.SpicetifyBridge.exe" },
+    "osx-arm64":   { "executable": "runtimes/osx-arm64/NeonLightning.SpicetifyBridge" },
+    "linux-x64":   { "executable": "runtimes/linux-x64/NeonLightning.SpicetifyBridge" }
   },
   "publisher": {
-    "name": "NiyahVE, NeonLightning"
+    "name": "NeonLightning, based on original work by NiyahVE"
   },
   "license": "MIT",
   "compatibility": { "macroDeck": ">=3.0.0-0" },

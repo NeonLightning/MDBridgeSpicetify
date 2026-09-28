@@ -1,11 +1,11 @@
 ﻿using MacroDeck.Sdk;
 using MacroDeck.Sdk.Actions;
 using MacroDeck.Sdk.Variables;
-using Niyah.SpicetifyBridge.Actions;
-using Niyah.SpicetifyBridge.Services;
+using NeonLightning.SpicetifyBridge.Actions;
+using NeonLightning.SpicetifyBridge.Services;
 using Serilog;
 
-namespace Niyah.SpicetifyBridge;
+namespace NeonLightning.SpicetifyBridge;
 
 public sealed class PluginIntegration : IPluginIntegration, IVariableProvider
 {
